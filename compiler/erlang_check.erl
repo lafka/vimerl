@@ -10,6 +10,9 @@ main([File]) ->
             warn_unused_import,
             report,
             {i, Dir ++ "/include"},
+            {i, Dir ++ "/../include"},
+            {i, Dir ++ "/../../include"},
+            {i, Dir ++ "/../../../include"},
             {i, Dir ++ "/lib"},
             {i, Dir ++ "/deps"}],
     RebarFile = rebar_file(Dir),
@@ -32,7 +35,7 @@ rebar_file(Dir) ->
 
 get_root(Dir) ->
     Path = filename:split(filename:absname(Dir)),
-    filename:join(get_root(lists:reverse(Path), [])).
+    filename:join(get_root(lists:reverse(Path), Path)).
 
 get_root([], Path) ->
     Path;
