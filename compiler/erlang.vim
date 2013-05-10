@@ -27,6 +27,10 @@ if exists("*s:ShowErrors")
 	finish
 endif
 
+if !exists("g:erlang_autocompile")
+	let g:erlang_autocompile = "0"
+endif
+
 if !exists("g:erlang_show_errors")
 	let g:erlang_show_errors = 1
 endif
@@ -45,7 +49,7 @@ function s:ShowErrors()
 	if match(getline(1), "#!.*escript") != -1
 		setlocal makeprg=escript\ -s\ %
 	else
-		execute "setlocal makeprg=" . s:erlang_check_file . "\\ \%"
+		execute "setlocal makeprg=AUTOCOMPILE\=" . g:erlang_autocompile . "\\ " . s:erlang_check_file . "\\ \%"
 	endif
 	silent make!
 	for error in getqflist()
